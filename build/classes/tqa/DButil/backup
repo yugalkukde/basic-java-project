@@ -1,0 +1,81 @@
+return !(txtOption1.getText().isEmpty() || txtOption2.getText().isEmpty() || txtOption3.getText().isEmpty() || txtOption4.getText().isEmpty());
+
+
+
+next{
+    if (validateInput() == false) {
+            JOptionPane.showMessageDialog(null, "Please fill all the fields", "Error!!", JOptionPane.ERROR_MESSAGE);
+        } else {
+            
+            correctOption = jcCorrectOption.getSelectedItem().toString();
+            String optionName = options.get(correctOption);
+            Question obj = new Question(editExam.getExamID(), qno, editExam.getLaunguae(), option1, option2, option3, option4, optionName, question);
+            qstore.removeQuestion(pos);
+            qstore.setQuestionAt(obj, pos);
+            pos++;
+            clearAll();
+            showQuestion();
+            lblTitle.setText((editExam.getTotalQuestion() - qno) + " Question Remaining");
+            qno++;
+            if (qno >= editExam.getTotalQuestion()) {
+                jButton5.setEnabled(true);
+                jButton1.setEnabled(false);
+                
+            } else {
+                lblQueNo.setText("Question " + qno);
+            }
+        }
+}
+
+previous{
+    if (validateInput() == false) {
+            JOptionPane.showMessageDialog(null, "Please fill all the fields", "Error!!", JOptionPane.ERROR_MESSAGE);
+        } else {
+            
+            correctOption = jcCorrectOption.getSelectedItem().toString();
+            String optionName = options.get(correctOption);
+            Question obj = new Question(editExam.getExamID(), qno, editExam.getLaunguae(), option1, option2, option3, option4, optionName, question);
+            qstore.addQuestion(obj);
+            pos--;
+            clearAll();
+            showQuestion();
+            lblTitle.setText((editExam.getTotalQuestion() + qno) + " Question Remaining");
+            qno--;
+            if (qno <= editExam.getTotalQuestion()) {
+                jButton1.setEnabled(true);
+                jButton5.setEnabled(false);
+                
+            } else {
+                lblQueNo.setText("Question " + qno);
+            }
+        }
+}
+
+
+
+if (pos <= 0) {
+            JOptionPane.showMessageDialog(null, "Your question set has been successfully updated.\nPress the DONE button to send it to the database ", "Exam Added!", JOptionPane.INFORMATION_MESSAGE);
+            pos = qstore.getCount() - 1;
+        } 
+
+
+
+
+
+
+today
+
+ Answer ans = new Answer(exam.getExamID(), exam.getLaunguae(), qno, choosenOp, question.getCorrectAns());
+        astore.addAnswer(ans);
+        System.out.println(ans);
+        pos++;
+        if (pos >= qstore.getCount()) {
+            JOptionPane.showMessageDialog(null, "Your Answers set has been successfully Set.\nPress the DONE button to send it to the database ", "Answer Added!", JOptionPane.INFORMATION_MESSAGE);
+            pos = 0;
+        }
+        qno++;
+        if (qno > qstore.getCount()) {
+            qno = 1;
+        }
+        showQuestion();
+        lblQueNo.setText("Question " + qno);
